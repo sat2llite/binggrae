@@ -13,13 +13,6 @@
   font-style: normal;
 }
 
-@font-face {
-    font-family: 'Binggrae-Two';
-    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_one@1.0/Binggrae-Bold.woff') format('woff');
-    font-weight: normal;
-    font-style: normal;
-}
-
 @keyframes upDown {
   0% { transform: translateY(0); }
   50% { transform: translateY(-10px); }
@@ -46,20 +39,23 @@ section h3 {
   font-size: 36px;
   font-family: "binggrae";
   margin-bottom: 50px; 
+  font-weight: 700;
 }
 
 /** header **/
 #header { 
-  position: absolute;
+  position: fixed;
   top: 0;
   width: 100%;
   height: 147px; 
+  z-index: 10;
 }
 .header_top {
   padding: 0 80px;
   border-bottom: 1px solid #E7E7E7;
   height: 30px;
   line-height: 30px;
+  z-index: 12;
 }
 .header_top ul {
   /* width: 1760px; */
@@ -79,12 +75,16 @@ section h3 {
   padding: 0 80px;
   /* border: 1px solid red; */
 }
+#header.on {
+  background: #fff;
+}
+
 #gnb {
   width: 100%;
   height: 115px;
   line-height: 115px;
 }
-#gnb a {
+#gnb > ul > li > a {
   margin-right: 80px;
   font-size: 20px;
 }
@@ -96,32 +96,109 @@ section h3 {
   font-weight: 900;
   color: #1f1f1f;
 }
+
+/* hamburger menu */
 .hamburger span {
   display: block;
   width: 26px;
   height: 2px;
   background: #000;
+  transition: transform .3s;
 }
+.hamburger.on span:nth-child(1) { 
+  transform: rotate(-45deg); 
+  margin-top: 8px;
+}
+.hamburger.on span:nth-child(2) { 
+  transform: rotate(45deg);
+  margin-top: -2px; 
+}
+.hamburger.on span:nth-child(3) { opacity: 0; }
+
 .hamburger span+span { margin-top: 8px; }
+.hamburger_menu {
+  position: fixed;
+  width: 100%;
+  height: 100vh;
+  z-index: 9;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #fff url("../img/pc_ham_bg.png") no-repeat right top -80px;
+  visibility: hidden;
+  opacity: 0;
+  transition: all 0.3s;
+}
+.depth01 {
+  display: flex;
+  justify-content: center;
+  cursor: pointer;
+}
+.depth01 span {
+  font-family: "binggrae";
+  font-weight: bold;
+  font-size: 32px;
+  transition: .5s
+}
+.depth01 > li {
+  width: 255px;
+  /* height: 460px; */
+  border-radius: 30px;
+  border: solid 1px rgba(224, 223, 226, 0.6);
+  padding: 50px 30px;
+  background-color: #fff;
+  transition: transform .6s;
+  margin-right: 10px;
+}
+.depth01 > li:hover {
+  box-shadow: 0px 5px 24.3px 2.7px rgba(0, 0, 0, 0.09);
+  transform: translateY(-10px);
+}
+.depth01 > li:hover span { color: #e0462e; }
+
+.depth02 { padding-top: 40px; }
+.depth02 li {
+  font-size: 18px;
+  padding: 7px 0;
+}
+.depth02 li a:hover {
+  color: #e0462e;
+  font-weight: 500;
+  transition: .5s
+}
+
+.depth03 li a {
+  font-size: 16px;
+  color: #aaa;
+  font-weight: 300;
+}
 
 #gnb .lnb {
-  display: none;
+  /* display: none; */
+  visibility: hidden;
+  opacity: 0;
   position: absolute;
+  margin-top: 20px;
 }
 /* #gnb ul:hover .lnb { display: block; } */
 #gnb .lnb li {
   line-height: 1;
-  padding: 7px 0;
+  padding: 10px 0;
 }
 #gnb .lnb a {
   font-size: 18px;
 }
 #gnb .lnb a:hover { color: #e0462e; transition: .3s; }
-
 .active { 
-  height: 566px; 
-  background: #fff;
+  background: #fff; 
+  box-shadow: 0 4px 7px 2px  rgba(0, 0, 0, .05);
+  border-radius: 0 0 50px 50px;
+  opacity: 1;
+  visibility: visible;
+  transition: all .5s .1s;
 }
+.active .lnb { transition: all 1s .4s }
+
 
 /** section **/
 /** aside **/
@@ -150,13 +227,13 @@ section h3 {
   height: 55px;
   background: #000;
   border-radius: 55px;
+  cursor: pointer;
 }
-
 
 /** section01 **/
 .section01 {
   margin-top: 147px;
-  background: url(../img/pc_section01_1.png) no-repeat center / cover; 
+  background: url("../img/pc_section01_1.png") no-repeat center / cover; 
 }
 
 .main_visual {
@@ -184,11 +261,10 @@ section h3 {
   height: 100%;
   padding: 0 15px 0 30px;
   justify-content: space-between;
-  background: url(../img/search_icon.png) no-repeat center left;
+  background: url("../img/search_icon.png") no-repeat center left;
 }
 .search input {
   width: 70%;
-  height: 100%;
   border: none;
   outline: none;
   font-family: "poppins";
@@ -247,6 +323,10 @@ section h3 {
 .list_wrap li {
   text-align: center;
 }
+.list_wrap li:hover {
+  transform: translateY(-10px);
+  transition: 1s;
+}
 .list_wrap .img_box {
   margin-bottom: 12px;
 }
@@ -257,6 +337,10 @@ section h3 {
   width: 100%;
   height: 43px;
   line-height: 43px;
+}
+.section02 .list_wrap li:hover .img_txt {
+  background: #E63129;
+  color: #fff;
 }
 
 .slider_wrap { padding-bottom: 140px; }
@@ -357,6 +441,7 @@ section h3 {
   border-radius: 30px;
   border: 1px solid #E7E7E7;
   background-color: #fff;
+  cursor: pointer;
 }
 .more:hover {
   box-shadow: inset 0px 5px 10px 0 rgba(121, 121, 121, 0.03);
